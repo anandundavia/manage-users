@@ -1,9 +1,9 @@
 const chai = require('chai');
-const loginController = require('../../../src/api/controllers/login.controller');
+const loginController = require('../../../src/api/controllers/auth.controller');
 
 chai.should();
 
-describe('Tests for controllers/login.controller.js', () => {
+describe('Tests for controllers/auth.controller.js', () => {
     describe('Tests for exported members', () => {
         it('Should export 1 member', () => {
             const exportedMembers = Object.keys(loginController);
