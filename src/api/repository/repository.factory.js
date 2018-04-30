@@ -17,6 +17,7 @@ const validate = (repo) => {
         create: Joi.func().arity(1).required(),
         find: Joi.func().arity(1).required(),
         update: Joi.func().arity(2).required(),
+        disconnect: Joi.func().arity(0).required(),
     }).pattern(/./, Joi.any()); // Any other helper functions user might want to pass in the repository is fine
     return Joi.validate(repo, schema);
 };
