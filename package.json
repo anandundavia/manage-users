@@ -8,6 +8,15 @@
     },
     "author": "Anand Undavia <abundavia@gmail.com>",
     "license": "MIT",
+    "keywords": [
+        "auth",
+        "login",
+        "signup",
+        "express",
+        "passport",
+        "bcrypt",
+        "user"
+    ],
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "express": "^4.16.3",

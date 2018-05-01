@@ -8,7 +8,7 @@ From a fully functional production application to a minimal prototype, what is t
 * In-Built mongo repository implementation
 * Can use other repository implementations
 * Configurable user and repository schema
-
+* Uses bcrypt with 'password+salt+pepper' mechanism to generate hashes of passwords
 
 
 ## Installing
