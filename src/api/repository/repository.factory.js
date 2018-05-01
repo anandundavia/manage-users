@@ -12,12 +12,18 @@ const repositories = {};
 // TODO: Validate return type as well
 const validate = (repo) => {
     const schema = Joi.object().keys({
-        connect: Joi.func().arity(0).required(), // => arity means number of arguments
-        exists: Joi.func().arity(1).required(),
-        create: Joi.func().arity(1).required(),
-        find: Joi.func().arity(1).required(),
-        update: Joi.func().arity(2).required(),
-        disconnect: Joi.func().arity(0).required(),
+        connect: Joi.func().arity(0).required() // => arity means number of arguments
+            .error(new Error('\'connect\' must be a function which would take exactly 0 arguments')),
+        exists: Joi.func().arity(1).required()
+            .error(new Error('\'exists\' must be a function which would take exactly 1 argument ( the unique key using which you identify the users )')),
+        create: Joi.func().arity(1).required()
+            .error(new Error('\'create\' must be a function which would take exactly 1 argument ( the user object you want to add in the database )')),
+        find: Joi.func().arity(1).required()
+            .error(new Error('\'find\' must be a function which would take exactly 1 argument ( the unique key using which you identify the users )')),
+        update: Joi.func().arity(2).required()
+            .error(new Error('\'update\' must be a function which would take exactly 2 argument ( the unique key and the updates to be made )')),
+        disconnect: Joi.func().arity(0).required()
+            .error(new Error('\'disconnect\' must be a function which would take exactly 0 argument')),
     }).pattern(/./, Joi.any()); // Any other helper functions user might want to pass in the repository is fine
     return Joi.validate(repo, schema);
 };

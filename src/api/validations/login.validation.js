@@ -4,7 +4,6 @@ const userSchema = require('../configuration/user.schema');
 const login = () => {
     const body = {};
     const schema = userSchema.get();
-    if (!schema) return body;
 
     const key = schema.keyField.name;
     const isKeyEmail = schema.keyField.isEmail;
