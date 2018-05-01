@@ -284,22 +284,20 @@ const implementation = require('./repo.js');
 // Wrap around try catch to see if there are any validation
 // errors while registering your own implementation
 try {
-config.repositoryBuilder()
-    .setRepositoryImplementation(implementation)
-    .build('my_custom_repo');
+    config.repositoryBuilder()
+        .setRepositoryImplementation(implementation)
+        .build('my_custom_repo');
 
-config.repositorySchemaBuilder()
-    .setRepository('my_custom_repo') // Same as the name you passed!
-    .setUri('mongodb://198.168.1.1:27017/my_db')
-    .setDatabaseName('my_db')    
-    .setCollectionName('my_users')
-    .build();
+    config.repositorySchemaBuilder()
+        .setRepository('my_custom_repo') // Same as the name you passed!
+        .setUri('mongodb://198.168.1.1:27017/my_db')
+        .setDatabaseName('my_db')    
+        .setCollectionName('my_users')
+        .build();
 } catch(e) {
     console.error(e)
 }
 
-
-    
 ```
 
 ## Contributing
