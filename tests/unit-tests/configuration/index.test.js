@@ -5,9 +5,9 @@ chai.should();
 
 describe('Tests for configuration/index.js', () => {
     describe('Tests for exported members', () => {
-        it('should export 3 members', () => {
+        it('should export 4 members', () => {
             const exportedMembers = Object.keys(config);
-            exportedMembers.length.should.be.equals(3);
+            exportedMembers.length.should.be.equals(4);
         });
 
         const checkExportedMember = (member) => {

@@ -4,6 +4,9 @@ const { MongoClient } = require('mongodb');
 const logger = require('../utils/logger')(module);
 
 
+// Holds the reference to the client. Used to close the connections,
+let client = null;
+
 // Holds the current connection to repository
 let db = null;
 
@@ -28,19 +31,31 @@ const connect = () => new Promise((resolve, reject) => {
     logger.info(`opening a connection to repository '${repoSchema.repository}' at '${repoSchema.uri}'`);
     connectionIsProgress = true; // setting the flag
     connectionPromise = new Promise(() => {
-        MongoClient.connect(repoSchema.uri, (err, client) => {
+        MongoClient.connect(repoSchema.uri, (err, aClient) => {
             if (err) {
                 connectionIsProgress = false; // unsetting the flag
                 return reject(err);
             }
             logger.info('successfully opened a connection to mongo');
-            db = client.db(repoSchema.database);
+            db = aClient.db(repoSchema.database);
+            client = aClient;
 
             connectionIsProgress = false;// unsetting the flag
-            return resolve(db);
+            return resolve(client);
         });
     });
     return connectionPromise;
+});
+
+const disconnect = () => new Promise((resolve, reject) => {
+    try {
+        const repoSchema = repositorySchema.get();
+        logger.info(`closing the connection to repository '${repoSchema.repository}' connection`);
+        client.close();
+        resolve();
+    } catch (e) {
+        reject(e);
+    }
 });
 
 /**
@@ -112,5 +127,5 @@ const update = (key, updates) => new Promise(async (resolve, reject) => {
 });
 
 module.exports = {
-    connect, exists, create, find, update,
+    connect, exists, create, find, update, disconnect,
 };

@@ -46,7 +46,7 @@ const validateSchema = (schema) => {
 const set = (schemaToSet) => {
     logger.info('setting user schema');
     validateSchema(schemaToSet);
-    USER_SCHEMA = schemaToSet;
+    USER_SCHEMA = Object.assign({}, schemaToSet);
 };
 
 const get = () => USER_SCHEMA;

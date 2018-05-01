@@ -5,9 +5,9 @@ chai.should();
 
 describe('Tests for middlewares/passport.middleware.js', () => {
     describe('Tests for exported members', () => {
-        it('Should export 1 members', () => {
+        it('Should export 2 members', () => {
             const exportedMembers = Object.keys(passport);
-            exportedMembers.length.should.be.equals(1);
+            exportedMembers.length.should.be.equals(2);
         });
 
         const checkExportedMember = (member) => {
