@@ -1,7 +1,7 @@
 const repositoryFactory = require('./repository.factory');
 const repositorySchema = require('../configuration/repository.schema');
 const mongo = require('./mongo.repository');
-const logger = require('../utils/logger')(module);
+const logger = require('../utils/logger');
 
 // Adding default mongo repository
 (() => {

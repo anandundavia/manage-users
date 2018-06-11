@@ -20,8 +20,7 @@ exports.signup = async (req, res, next) => {
         // This case will be handled when the body is filtered
         delete user[schema.confirmPasswordField.name];
 
-        const { salt, hash } = await security.encrypt(user[schema.passwordField.name]);
-        user.salt = salt;
+        const { hash } = await security.encrypt(user[schema.passwordField.name]);
         user.hash = hash;
 
         // Once the password is hashed, delete it from the object.
@@ -33,9 +32,8 @@ exports.signup = async (req, res, next) => {
         user.meta.logged_in_at = 0;
         const result = await repository.get().create(user);
 
-        // once the user is added, remove the hash and salt from the object.
+        // once the user is added, remove the hash from the object.
         delete user.hash;
-        delete user.salt;
         if (result) {
             return res.status(httpStatus.OK).json({ user, result });
         }

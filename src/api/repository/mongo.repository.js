@@ -1,7 +1,7 @@
 const userSchema = require('../configuration/user.schema');
 const repositorySchema = require('../configuration/repository.schema');
 const { MongoClient } = require('mongodb');
-const logger = require('../utils/logger')(module);
+const logger = require('../utils/logger');
 
 
 // Holds the reference to the client. Used to close the connections,

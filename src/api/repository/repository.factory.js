@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const repositorySchema = require('../configuration/repository.schema');
-const logger = require('../utils/logger')(module);
+const logger = require('../utils/logger');
 
 // It will have reference to all the repositories resigtered on runtime
 // repositories.custom_repo will yeild the implementation of the custom_repo

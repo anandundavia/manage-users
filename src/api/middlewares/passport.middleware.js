@@ -17,7 +17,6 @@ const setStrategy = () => {
                 const isSame = await security.compare(password, user.hash);
                 /* eslint-disable no-param-reassign */
                 delete user.hash;
-                delete user.salt;
                 if (isSame) {
                     // Copying the meta object from user to avoid 'pass-by-reference' issues
                     const meta = Object.assign({}, user.meta);
