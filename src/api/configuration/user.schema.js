@@ -19,6 +19,9 @@ const validation = Joi.object().keys({
     confirmPasswordField: Joi.object().keys({
         name: Joi.string().required(),
     }).required(),
+    newPasswordField: Joi.object().keys({
+        name: Joi.string().required(),
+    }).optional(),
 });
 
 // Default user schema
@@ -34,6 +37,10 @@ let USER_SCHEMA = {
     confirmPasswordField: {
         name: 'confirm', // confirmation password will be in req.body.confirm
     },
+    newPasswordField: {
+        // this will always be `new_${passwordField.name}`
+        name: 'new_password', // This is required to change the password
+    },
 };
 
 const validateSchema = (schema) => {
@@ -46,6 +53,11 @@ const validateSchema = (schema) => {
 const set = (schemaToSet) => {
     logger.info('setting user schema');
     validateSchema(schemaToSet);
+    /* eslint-disable no-param-reassign */
+    schemaToSet.newPasswordField = {
+        name: `new_${schemaToSet.passwordField.name}`,
+    };
+    /* eslint-ensable no-param-reassign */
     USER_SCHEMA = Object.assign({}, schemaToSet);
 };
 

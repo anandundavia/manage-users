@@ -1,10 +1,10 @@
 # Manage Users
-From a fully functional production application to a minimal prototype, what is the one feature that is common amongst all of the apps you will ever write? <br>Yeah.<br> <b>Signing up and Logging in the users.</b><br>
+From a fully functional production application to a minimal prototype, what is the one feature that is common amongst all of the apps you will ever write? <br><b>Signing up and Logging in the users.</b><br>
 `manage-users` does one thing of managing your user-base (SignUp and LogIn) and it does it beautifully while giving you the full control.
 
 
 ## Features
-* Out of the box signup and login routes
+* Out of the box signup, login and change password routes
 * In-Built mongo repository implementation
 * Can use other repository implementations
 * Configurable user and repository schema
@@ -46,13 +46,14 @@ config.passport.session();
 
 app.post('/login', routes.login());
 app.post('/signup', routes.signup());
+app.post('/changePassword', routes.changePassword());
 
 app.listen(3000, () => {
     console.log('listening');
 })
 
 ```
-It by default, 
+So by default, 
 The body to signup the user will be:
 ```
 {
@@ -91,6 +92,20 @@ The request body that will match would now be:
 }
 ```
 
+The request body to change the password would be:
+```
+{
+	"email" : "someone@gmail.com",
+	"input_password" : "1234567890",
+	"new_input_password": "some_new_password",
+    "confirm_password": "some_new_password"
+}
+```
+
+Note that while changing the password, the field that contains the new password will be 'new_[passwordKeyName]'
+
+So for example, if your password key name is `pwd`, the new password will be in `new_pwd`.
+
 Here is the full example:
 
 ```
@@ -127,6 +142,7 @@ config.userSchemaBuilder()
 
 app.post('/login', routes.login());
 app.post('/signup', routes.signup());
+app.post('/changePassword', routes.changePassword());
 
 app.listen(3000, () => {
     console.log('listening');
@@ -188,6 +204,7 @@ config.repositorySchemaBuilder()
 
 app.post('/login', routes.login());
 app.post('/signup', routes.signup());
+app.post('/changePassword', routes.changePassword());
 
 app.listen(3000, () => {
     console.log('listening');

@@ -4,7 +4,8 @@ const validations = require('../validations');
 const { connect } = require('../repository');
 const { signup } = require('./signup.controller');
 const { login } = require('./auth.controller');
-const { reset } = require('./reset.controller');
+const { changePassword, reset } = require('./password.controller');
+
 /**
  * Main entry of the application.
  * The application will have no effects unless and until any of the exported
@@ -50,6 +51,16 @@ module.exports = {
             const err = validate(schema)(req, res, next);
             if (!err) {
                 reset(req, res, next);
+            }
+        };
+    },
+    changePassword() {
+        connect();
+        return (req, res, next) => {
+            const schema = validations.changePassword();
+            const err = validate(schema)(req, res, next);
+            if (!err) {
+                changePassword(req, res, next);
             }
         };
     },

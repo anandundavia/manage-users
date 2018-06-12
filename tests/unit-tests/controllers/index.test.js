@@ -5,9 +5,9 @@ chai.should();
 
 describe('Tests for controllers/index.js', () => {
     describe('Tests for exported members', () => {
-        it('Should export 3 members', () => {
+        it('Should export 4 members', () => {
             const exportedMembers = Object.keys(controllers);
-            exportedMembers.length.should.be.equals(3);
+            exportedMembers.length.should.be.equals(4);
         });
 
         const checkExportedMember = (member) => {
@@ -20,6 +20,7 @@ describe('Tests for controllers/index.js', () => {
 
         checkExportedMember('signup');
         checkExportedMember('login');
+        checkExportedMember('changePassword');
     });
 
     describe('Tests for functionalities', () => {

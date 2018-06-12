@@ -1,6 +1,10 @@
 const { signup } = require('./signup.validation');
 const { login } = require('./login.validation');
-const { reset } = require('./reset.validation');
+const { changePassword, reset } = require('./password.validation');
 
-module.exports = { signup, login, reset };
-
+module.exports = {
+    signup,
+    login,
+    reset,
+    changePassword,
+};

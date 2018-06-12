@@ -64,6 +64,10 @@ describe('Tests for configuration/userSchema.js', () => {
                 },
             };
             userSchema.set(schemaToSet);
+
+            schemaToSet.newPasswordField = {
+                name: `new_${schemaToSet.passwordField.name}`,
+            };
             userSchema.get().should.be.equals(schemaToSet);
         });
 
