@@ -19,12 +19,12 @@ const signup = () => {
     // TODO: should there be any complexity for password?
     body[password] = Joi.string().min(passwordLen).required();
 
-    // [assword should be as same as the confirm field. (server side validation)
+    // Password should be as same as the confirm field. (server side validation)
     /* eslint-disable-next-line max-len */
     body[confirm] = Joi.string().valid(Joi.ref(schema.passwordField.name)).required();
 
     // .pattern(/./, Joi.any()) basically means that anything besides all this keys is fine
-    // This lets user add the custom information to databse while signing up
+    // This lets user add the custom information to database while signing up
     return Joi.object().keys(body).pattern(/./, Joi.any());
 };
 

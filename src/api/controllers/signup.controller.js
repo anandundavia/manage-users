@@ -16,7 +16,7 @@ exports.signup = async (req, res, next) => {
             return res.status(httpStatus.BAD_REQUEST).json({ message: `A user with key '${key}' already exists.` });
         }
         // Deleting the duplicate key value in the user
-        // before interting the body into the database
+        // before interning the body into the database
         // This case will be handled when the body is filtered
         delete user[schema.confirmPasswordField.name];
 

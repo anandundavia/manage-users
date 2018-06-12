@@ -16,7 +16,7 @@ let connectionIsProgress = false;
 let connectionPromise = null;
 
 /**
- * Opens the connection to database and saves the conneciton in 'db' variable.
+ * Opens the connection to database and saves the connection in 'db' variable.
  * @returns {Promise} A promise that will be resolved to the database connection if successful
  */
 const connect = () => new Promise((resolve, reject) => {
@@ -95,7 +95,7 @@ const create = object => new Promise(async (resolve, reject) => {
 
 
 /**
- * Takes the userobject with key and password field and checks for the matching entry
+ * Takes the user object with key and password field and checks for the matching entry
  * in the repository
  * @param {*} user
  * @returns {Promise} A Promise that will get resolved to the output repository operation

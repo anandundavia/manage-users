@@ -11,7 +11,7 @@ const validation = Joi.object().keys({
         name: Joi.string().required(),
         isEmail: Joi.boolean(),
     }).required(),
-    // Same explaination as above
+    // Same explanation as above
     passwordField: Joi.object().keys({
         name: Joi.string().required(),
         minLength: Joi.number().min(6).required(),

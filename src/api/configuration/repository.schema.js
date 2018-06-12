@@ -33,7 +33,7 @@ const setWrapper = {
 
 /**
  * The 'DEFAULT' schema for the repository in memory.
- * Should we store it in more persistence storatge?
+ * Should we store it in more persistence storage?
  */
 let REPOSITORY_SCHEMA = {
     repository: 'mongo', // Name of the repository. Can be any random name

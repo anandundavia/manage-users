@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 
 // I thought of declaring these constants outside and in one separate file
-// But casually temporing with these variables might lead to lose of all the information
-// in the database or a drastic performace drop.
+// But casually tempering with these variables might lead to lose of all the information
+// in the database or a drastic performance drop.
 // Most of the time, you do not want to change these variables
 const constants = {
     // Do not just play around with salt rounds.
@@ -10,7 +10,7 @@ const constants = {
     // would take double the time if the rounds are increased by 1
     saltRounds: 12,
     // WARNING: DO NOT, DO NOT change this or you will basically lose all the
-    // exisiting information about the users in the database.
+    // existing information about the users in the database.
     // You will have to re-register all the users in the system.
     pepper: '$2a$10$WgvGi9k0FI6WwOgx/X148e',
 };

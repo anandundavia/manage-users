@@ -3,8 +3,8 @@ const Joi = require('joi');
 const repositorySchema = require('../configuration/repository.schema');
 const logger = require('../utils/logger');
 
-// It will have reference to all the repositories resigtered on runtime
-// repositories.custom_repo will yeild the implementation of the custom_repo
+// It will have reference to all the repositories registered on runtime
+// repositories.custom_repo will yield the implementation of the custom_repo
 // which has all the required functions
 const repositories = {};
 
@@ -47,7 +47,7 @@ exports.add = (name, repository) => {
         logger.warn(`implementation exists for repository named '${name}' overridden`);
     }
     // Add it to the schema so that the schema validation works.
-    // The overridden add function leads to regeneration of the validation shcema
+    // The overridden add function leads to regeneration of the validation schema
     repositorySchema.repository.add(name);
     // Save the repository in the memory
     repositories[name] = repository;
