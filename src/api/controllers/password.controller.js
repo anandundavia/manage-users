@@ -28,6 +28,9 @@ exports.changePassword = async (req, res, next) => {
         const newPassword = body[schema.newPasswordField.name];
 
         const user = await repository.get().find({ key });
+        if (!user) {
+            return res.status(httpStatus.UNAUTHORIZED).json({ message: 'Incorrect username and/or password' });
+        }
         const isSame = await security.compare(password, user.hash);
         // Check if the existing pair of username password matches
         if (!isSame) {
@@ -38,7 +41,7 @@ exports.changePassword = async (req, res, next) => {
         const meta = Object.assign({}, user.meta);
         meta.password_changed_at = new Date().getTime();
 
-        repository.get().update(key, { hash, meta });
+        await repository.get().update(key, { hash, meta });
         // once updated,
         // logout in order to force the user to re-login
         req.logout();
