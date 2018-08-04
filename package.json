@@ -1,7 +1,7 @@
 {
     "name": "manage-users",
     "version": "1.1.1",
-    "description": "'Plug and play' node module for user sign up, login and other management tasks",
+    "description": "'Plug and play' node module for user sign up, login and other user management tasks.",
     "main": "src/index.js",
     "scripts": {
         "test": "set NODE_ENV=test && mocha --recursive tests/**/*.test.js --timeout 10000"
@@ -17,6 +17,11 @@
         "bcrypt",
         "user"
     ],
+    "homepage": "https://github.com/anandundavia/manage-users",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/anandundavia/manage-users"
+    },
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "express": "^4.16.3",
