@@ -4,17 +4,17 @@ From a fully functional production application to a minimal prototype, what is t
 
 
 ## Features
-* Out of the box signup, login and change password routes
-* In-Built mongo repository implementation
-* Can use other repository implementations
-* Configurable user and repository schema
-* Uses bcrypt with 'password+salt+pepper' mechanism to generate hashes of passwords
+* Out of the box signup, login and change password routes.
+* In-Built mongo and in-memory repository implementations.
+* Can use other repository implementations.
+* Configurable user and repository schema.
+* Uses bcrypt with 'password+salt+pepper' mechanism to generate hashes of passwords.
 
 
 ## Installing
 
 ```
-npm install manage-users
+npm install manage-users --save
 ```
 
 ## Usage
@@ -53,7 +53,7 @@ app.listen(3000, () => {
 })
 
 ```
-So by default, 
+By default, 
 The body to signup the user will be:
 ```
 {
@@ -63,15 +63,15 @@ The body to signup the user will be:
 }
 ```
 
-It will create user entry in MongoDB running on localhost on PORT 27017
-It will use default database as `user_management` and user collection as `users`
+It will create user object in MongoDB running on localhost on PORT 27017.
+It will use default database as `user_management` and user collection as `users`.
 
 To change the configurations about user and repository, use `config` object which is exported from `manage-users`.
 
-MAKE SURE you change the configuration before you mount the routes to work as expected
+MAKE SURE you change the configuration before you mount the routes to avoid bugs.
 
 ### User Configuration
-To change user configuration, use `userSchemaBuilder` from `config`
+To change user configuration, use `userSchemaBuilder` from `config`.
 
 ```
 config.userSchemaBuilder()
@@ -102,11 +102,11 @@ The request body to change the password would be:
 }
 ```
 
-Note that while changing the password, the field that contains the new password will be 'new_[passwordKeyName]'
+Note that while changing the password, the field that contains the new password will be 'new_[passwordKeyName]'.
 
-So for example, if your password key name is `pwd`, the new password will be in `new_pwd`.
+For example, if your password key name is `pwd`, the new password will be in `new_pwd`.
 
-Here is the full example:
+Here is the complete example:
 
 ```
 const express = require('express');
@@ -213,10 +213,10 @@ app.listen(3000, () => {
 ```
 
 ## Using Custom Repository
-`manage-users` comes with default mongo repository out of the box.
-But you can plug in your custom repository implementation as well
+`manage-users` comes with mongo and in-memory repositories out of the box.
+Mongo is used as default repository, but you can plug in your custom repository implementation as well.
 
-To use the custom implementation of the repository, use `repositoryBuilder` from `config`
+To use the custom implementation of the repository, use `repositoryBuilder` from `config`.
 ```
 config.repositoryBuilder()
     .setRepositoryImplementation(implementation)
@@ -226,7 +226,7 @@ config.repositoryBuilder()
 The `implementation` must expose 6 methods:
 connect, exists, create, find, update, disconnect 
 
-For example, here is `repo.js`
+For example, here is `repo.js`:
 
 ```
 // Holds the reference to the client. Used to close the connections,
@@ -235,7 +235,7 @@ let client = null;
 // Holds the current connection to repository
 let db = null;
 
-// WARNING: System might behave unexpectedly if the confis from `repositorySchemaBuilder` 
+// WARNING: System might behave unexpectedly if the configs from `repositorySchemaBuilder` 
 // and this file do not match
 // For example, if you are setting `.setCollectionName('my_users') `
 // Then, you should use the same collection in this file as well
@@ -276,7 +276,7 @@ const find = ({ key }) => new Promise(async (resolve, reject) => {
     // find(query)
     // And user with that email will be returned
 
-    // The promise must resolve to user object
+    // The promise must resolve to user object if found or resolve to any falsy value otherwise (`null` for example).
 });
 
 
@@ -293,7 +293,7 @@ module.exports = {
 };
 ```
 
-Once you have the file,
+Once you have the `repo.js` ready,
 
 ```
 const implementation = require('./repo.js');
