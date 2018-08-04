@@ -31,7 +31,7 @@ const connect = () => new Promise((resolve, reject) => {
     logger.info(`opening a connection to repository '${repoSchema.repository}' at '${repoSchema.uri}'`);
     connectionIsProgress = true; // setting the flag
     connectionPromise = new Promise(() => {
-        MongoClient.connect(repoSchema.uri, (err, aClient) => {
+        MongoClient.connect(repoSchema.uri, { useNewUrlParser: true }, (err, aClient) => {
             if (err) {
                 connectionIsProgress = false; // unsetting the flag
                 return reject(err);
