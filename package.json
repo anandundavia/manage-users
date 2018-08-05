@@ -1,6 +1,6 @@
 {
     "name": "manage-users",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "'Plug and play' node module for user sign up, login and other user management tasks.",
     "main": "src/index.js",
     "scripts": {
