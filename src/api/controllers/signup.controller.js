@@ -35,7 +35,8 @@ exports.signup = async (req, res, next) => {
         // once the user is added, remove the hash from the object.
         delete user.hash;
         if (result) {
-            return res.status(httpStatus.OK).json({ user, result });
+            res.locals.signup = { user, result };
+            return next();
         }
         return res.status(httpStatus.INTERNAL_SERVER_ERROR)
             .json({ message: 'Something went wrong while creating a user' });
