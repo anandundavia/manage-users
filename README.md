@@ -4,7 +4,7 @@ From a fully functional production application to a minimal prototype, what is t
 
 
 ## Features
-* Out of the box signup, login and change password routes.
+* Out of the box signup, login and change password middlewares.
 * In-Built mongo and in-memory repository implementations.
 * Can use other repository implementations.
 * Configurable user and repository schema.
@@ -41,12 +41,33 @@ app.use(expressSession({
 
 // Make sure to initialize passport.
 // It is used for log in
-config.passport.initialize();
-config.passport.session();
+app.use(config.passport.initialize());
+app.use(app.use(config.passport.session()));
 
-app.post('/login', routes.login());
-app.post('/signup', routes.signup());
-app.post('/changePassword', routes.changePassword());
+app.post('/login', routes.login(), (req, res) => {
+    // This middleware will only be executed if the user has successfully logged in
+    // In case of successful log in, req.user object will contain the information about 
+    // logged in user.
+    // In case of un-successful log in, this middleware will not be executed, 
+    // routes.login() middleware will send 'Unauthorized' message back as the response.
+    res.send({ success: true, user: req.user })
+});
+app.post('/signup', routes.signup(), (req, res) => {
+    // This middleware will only be executed if the user has successfully signed up
+    // In case of successful sign up, res.locals.signup object will contain the 
+    // information about signed up user.
+    // In case of un-successful sign up, this middleware will not be executed, 
+    // routes.signup() middleware will send appropriate error message back as the response.
+    res.send({ success: true, response: res.locals.signup });
+});
+app.post('/changePassword', routes.changePassword(), (req, res) => {
+    // This middleware will only be executed if the password has successfully been changed
+    // In case of successful password change, no message is passed 
+    // forward by routes.changePassword() middleware.
+    // In case of un-successful password change, this middleware will not be executed, 
+    // routes.changePassword() middleware will send appropriate error message back as the response.
+    res.send({ success: true });
+});
 
 app.listen(3000, () => {
     console.log('listening');
@@ -129,8 +150,8 @@ app.use(expressSession({
 
 // Make sure to initialize passport.
 // It is used for log in
-config.passport.initialize();
-config.passport.session();
+app.use(config.passport.initialize());
+app.use(config.passport.session());
 
 config.userSchemaBuilder()
     .setUniqueKeyName('email')
@@ -140,9 +161,31 @@ config.userSchemaBuilder()
     .setConfirmPasswordKeyName('confirm_password')
     .build();
 
-app.post('/login', routes.login());
-app.post('/signup', routes.signup());
-app.post('/changePassword', routes.changePassword());
+app.post('/login', routes.login(), (req, res) => {
+    // This middleware will only be executed if the user has successfully logged in
+    // In case of successful log in, req.user object will contain the information about 
+    // logged in user.
+    // In case of un-successful log in, this middleware will not be executed, 
+    // routes.login() middleware will send 'Unauthorized' message back as the response.
+    res.send({ success: true, user: req.user })
+});
+app.post('/signup', routes.signup(), (req, res) => {
+    // This middleware will only be executed if the user has successfully signed up
+    // In case of successful sign up, res.locals.signup object will contain the 
+    // information about signed up user.
+    // In case of un-successful sign up, this middleware will not be executed, 
+    // routes.signup() middleware will send appropriate error message back as the response.
+    res.send({ success: true, response: res.locals.signup });
+});
+app.post('/changePassword', routes.changePassword(), (req, res) => {
+    // This middleware will only be executed if the password has successfully been changed
+    // In case of successful password change, no message is passed 
+    // forward by routes.changePassword() middleware.
+    // In case of un-successful password change, this middleware will not be executed, 
+    // routes.changePassword() middleware will send appropriate error message back as the response.
+    res.send({ success: true });
+});
+
 
 app.listen(3000, () => {
     console.log('listening');
@@ -150,7 +193,7 @@ app.listen(3000, () => {
 ```
 
 ### Repository Configuration
-To change user configuration, use `repositorySchemaBuilder` from `config`
+To change user configuration, use `repositorySchemaBuilder` from `config`.
 
 ```
 config.repositorySchemaBuilder()
@@ -160,6 +203,24 @@ config.repositorySchemaBuilder()
     .setCollectionName('my_users') // Collection or table name
     .build(); // DO NOT FORGET TO BUILD THE SCHEMA ONCE CONFIGURED!
 ```
+
+`manage-users` has two repository implementations named 'mongo' and 'in-memory'.<br>
+To use 'in-memory' repository: 
+
+```
+config
+        .repositorySchemaBuilder()
+        .setRepository('in-memory') // Set the name to 'in-memory'
+        .setUri('lorem://ipsum') // any string that passes the URI validation
+        .setDatabaseName('no-need') // any non empty string
+        .setCollectionName('no-need') // any non empty string
+        .build(); // DO NOT FORGET TO BUILD THE SCHEMA ONCE CONFIGURED!
+```
+
+> It is not recommended to use 'in-memory' repository for production environment 
+
+
+<br>
 
 Here is the complete example:
 
@@ -184,8 +245,8 @@ app.use(expressSession({
 
 // Make sure to initialize passport.
 // It is used for log in
-config.passport.initialize();
-config.passport.session();
+app.use(config.passport.initialize());
+app.use(config.passport.session());
 
 config.userSchemaBuilder()
     .setUniqueKeyName('email')
@@ -202,15 +263,63 @@ config.repositorySchemaBuilder()
     .setCollectionName('my_users')
     .build();
 
-app.post('/login', routes.login());
-app.post('/signup', routes.signup());
-app.post('/changePassword', routes.changePassword());
+app.post('/login', routes.login(), (req, res) => {
+    // This middleware will only be executed if the user has successfully logged in
+    // In case of successful log in, req.user object will contain the information about 
+    // logged in user.
+    // In case of un-successful log in, this middleware will not be executed, 
+    // routes.login() middleware will send 'Unauthorized' message back as the response.
+    res.send({ success: true, user: req.user })
+});
+app.post('/signup', routes.signup(), (req, res) => {
+    // This middleware will only be executed if the user has successfully signed up
+    // In case of successful sign up, res.locals.signup object will contain the 
+    // information about signed up user.
+    // In case of un-successful sign up, this middleware will not be executed, 
+    // routes.signup() middleware will send appropriate error message back as the response.
+    res.send({ success: true, response: res.locals.signup });
+});
+app.post('/changePassword', routes.changePassword(), (req, res) => {
+    // This middleware will only be executed if the password has successfully been changed
+    // In case of successful password change, no message is passed 
+    // forward by routes.changePassword() middleware.
+    // In case of un-successful password change, this middleware will not be executed, 
+    // routes.changePassword() middleware will send appropriate error message back as the response.
+    res.send({ success: true });
+});
+
 
 app.listen(3000, () => {
     console.log('listening');
 })
 
 ```
+## Protected Routes
+
+Note that `manage-users` uses [passport.js](https://www.npmjs.com/package/passport) to authenticate user. 
+You can use `config.passport` object for any passport related configuration. <br>
+To protect some route so that only authenticated user can access the route is done as follows:
+
+```
+function isAuthenticated(req, res, next) {
+    // Passport will parse the request cookies and
+    // create the req.user object accordingly.
+    // Thus we can safely say that if req.user object
+    // exists, the user is logged in
+    if (req.user) {
+        return next();
+    }
+    return res.status(401).send({ message: 'Unauthorized' });
+}
+```
+And use this middleware in some protected route:
+```
+app.get('/protected', isAuthenticated, (req, res) => {
+    res.send({ message: 'This is private area', user: req.user })
+})
+```
+
+---
 
 ## Using Custom Repository
 `manage-users` comes with mongo and in-memory repositories out of the box.
@@ -224,7 +333,7 @@ config.repositoryBuilder()
 ```
 
 The `implementation` must expose 6 methods:
-connect, exists, create, find, update, disconnect 
+`connect`, `exists`, `create`, `find`, `update`, `disconnect` 
 
 For example, here is `repo.js`:
 
