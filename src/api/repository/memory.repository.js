@@ -45,7 +45,10 @@ const find = ({ key }) => new Promise((resolve) => {
         return resolve(null);
     }
     const user = users[key];
-    return resolve(Object.assign({}, user));
+    if (user && Object.keys(user).length !== 0) {
+        return resolve(Object.assign({}, user));
+    }
+    return resolve(null);
 });
 
 
